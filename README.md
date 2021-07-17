@@ -17,7 +17,7 @@ You will need at least Visual Studio 2019 to build this project.
 
 ## TODO
 
-- Fix the 1-note late score bug (most likely related to score hook)
+- Fix the 1-note late score bug / only update on miss bug (most likely related to score hook)
 - Exit cleanly (probably not going to happen)
 - Making LR2mind not broadcast the message on UDP but instead only send it on localhost (low priority)
 - Make the program work if the DLL's path contains non-ASCII characters

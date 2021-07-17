@@ -33,6 +33,7 @@ namespace LR2Arena
                     uint score = BitConverter.ToUInt32(recvBuffer, 25);
                     uint exScore = great + 2 * pGreat;
                     Console.WriteLine($"PGreat: {pGreat}, Great: {great}, Good: {good}, Bad: {bad}, Poor: {poor}, Max combo: {maxCombo}, Score: {score}, ExScore: {exScore}");
+                    UdpManager.UpdatePacemaker(exScore);
                     break;
                 default:
                     Console.Error.WriteLine("Invalid operation");

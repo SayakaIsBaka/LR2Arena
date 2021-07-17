@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 
@@ -9,6 +10,7 @@ namespace LR2Arena
         private int port;
         private UdpClient udpClient;
         private BlockingCollection<byte[]> queue;
+        static readonly UdpClient pacemakerClient = new UdpClient();
 
         public UdpManager(int port, BlockingCollection<byte[]> queue)
         {
@@ -26,6 +28,11 @@ namespace LR2Arena
                 byte[] recvBuffer = udpClient.Receive(ref from);
                 queue.Add(recvBuffer);
             }
+        }
+        public static void UpdatePacemaker(uint exScore)
+        {
+            byte[] data = BitConverter.GetBytes(exScore);
+            pacemakerClient.SendAsync(data, data.Length, "127.0.0.1", 2223);
         }
     }
 }
