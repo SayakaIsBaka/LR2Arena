@@ -57,6 +57,7 @@ namespace LR2Arena
             else
             {
                 InjectDllButton.Enabled = false;
+                InjectDllButton.Text = "Successfully injected DLL!";
             }
         }
     }
