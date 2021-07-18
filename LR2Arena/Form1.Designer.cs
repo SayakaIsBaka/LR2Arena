@@ -129,6 +129,7 @@ namespace LR2Arena
             this.Ip.Name = "Ip";
             this.Ip.Size = new System.Drawing.Size(635, 20);
             this.Ip.TabIndex = 10;
+            this.Ip.TextChanged += new System.EventHandler(this.Ip_TextChanged);
             // 
             // Form1
             // 
@@ -161,7 +162,8 @@ namespace LR2Arena
         }
         public void AddLogTextBoxLine(string message)
         {
-            Log.Text += message + "\n";
+            Log.Text += message;
+            Log.Text += Environment.NewLine;
         }
         public void SetBmsMd5TextBox(string message)
         {

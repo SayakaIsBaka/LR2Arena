@@ -25,6 +25,19 @@ namespace LR2Arena
         private void IpConfirm_Click(object sender, EventArgs e)
         {
             string ip = Ip.Text;
+            if (!UdpManager.SetRemoteAddress(ip, 2224))
+            {
+                MessageBox.Show("Invalid IP, please verify that you wrote it correctly!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                IpConfirm.Enabled = false;
+            }
+        }
+
+        private void Ip_TextChanged(object sender, EventArgs e)
+        {
+            IpConfirm.Enabled = true;
         }
     }
 }

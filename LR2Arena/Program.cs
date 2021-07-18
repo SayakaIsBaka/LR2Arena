@@ -36,14 +36,10 @@ namespace LR2Arena
             }
 
             BlockingCollection<byte[]> queue = new BlockingCollection<byte[]>();
+            StartUdpReceiver(2222, queue); // LR2Arena <-> LR2Mind
 
-            Thread receiverThread = new Thread(
-                delegate ()
-                {
-                    UdpManager receiver = new UdpManager(2222, queue);
-                    receiver.Listen();
-                });
-            receiverThread.Start();
+            BlockingCollection<byte[]> remoteQueue = new BlockingCollection<byte[]>();
+            StartUdpReceiver(2224, remoteQueue); // LR2Arena <-> LR2Arena (remote)
 
             Task.Run(() =>
             {
@@ -55,6 +51,17 @@ namespace LR2Arena
             });
 
             Application.Run(form);
+        }
+
+        static void StartUdpReceiver(int port, BlockingCollection<byte[]> queue)
+        {
+            Thread receiverThread = new Thread(
+                delegate ()
+                {
+                    UdpManager receiver = new UdpManager(port, queue);
+                    receiver.Listen();
+                });
+            receiverThread.Start();
         }
     }
 }
