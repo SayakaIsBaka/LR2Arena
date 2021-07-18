@@ -45,9 +45,7 @@ namespace LR2Arena
             this.Ip = new System.Windows.Forms.TextBox();
             this.InjectDllButton = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.processorBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.processorBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // Log
@@ -153,9 +151,9 @@ namespace LR2Arena
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.Transparent;
+            chartArea1.AxisX.MajorGrid.Enabled = false;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.DataSource = this.processorBindingSource;
             this.chart1.Location = new System.Drawing.Point(12, 107);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
@@ -167,10 +165,6 @@ namespace LR2Arena
             this.chart1.Size = new System.Drawing.Size(776, 143);
             this.chart1.TabIndex = 12;
             this.chart1.Text = "chart1";
-            // 
-            // processorBindingSource
-            // 
-            this.processorBindingSource.DataSource = typeof(LR2Arena.Processor);
             // 
             // Form1
             // 
@@ -193,7 +187,6 @@ namespace LR2Arena
             this.Text = "LR2Arena";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.processorBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,7 +229,6 @@ namespace LR2Arena
         private System.Windows.Forms.TextBox Ip;
         private System.Windows.Forms.Button InjectDllButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.BindingSource processorBindingSource;
     }
 }
 
