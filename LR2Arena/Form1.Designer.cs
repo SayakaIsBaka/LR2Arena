@@ -219,9 +219,11 @@ namespace LR2Arena
         {
             BmsPath.Text = message;
         }
-        public System.Windows.Forms.DataVisualization.Charting.Chart GetGraph()
+        public void UpdateGraph(uint value, int pointIndex)
         {
-            return chart1;
+            chart1.Series["Score"].Points[pointIndex].YValues[0] = value;
+            chart1.ResetAutoValues();
+            chart1.Refresh();
         }
 
         private System.Windows.Forms.TextBox Log;

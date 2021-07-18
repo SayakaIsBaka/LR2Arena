@@ -54,6 +54,7 @@ namespace LR2Arena
                     {
                         p1exScore = exScore;
                         UdpManager.RemoteSendExScore(p1exScore);
+                        form.UpdateGraph(p1exScore, 0);
                     }
                     break;
                 default:
@@ -71,6 +72,7 @@ namespace LR2Arena
             {
                 p2exScore = exScore;
                 UdpManager.UpdatePacemaker(p2exScore);
+                form.UpdateGraph(p2exScore, 1);
             }
         }
     }
