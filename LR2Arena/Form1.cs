@@ -19,7 +19,13 @@ namespace LR2Arena
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            FillChart();
+        }
 
+        private void FillChart()
+        {
+            chart1.Series["Score"].Points.AddXY("You", "0");
+            chart1.Series["Score"].Points.AddXY("P2", "0");
         }
 
         private void IpConfirm_Click(object sender, EventArgs e)
@@ -32,12 +38,25 @@ namespace LR2Arena
             else
             {
                 IpConfirm.Enabled = false;
+                InjectDllButton.Enabled = true;
             }
         }
 
         private void Ip_TextChanged(object sender, EventArgs e)
         {
             IpConfirm.Enabled = true;
+        }
+
+        private void InjectDllButton_Click(object sender, EventArgs e)
+        {
+            if (!Init.Initialize(this))
+            {
+                MessageBox.Show("Error while injecting DLL, make sure LR2 is running!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                InjectDllButton.Enabled = false;
+            }
         }
     }
 }

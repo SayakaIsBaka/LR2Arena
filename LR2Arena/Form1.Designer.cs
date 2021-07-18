@@ -30,6 +30,10 @@ namespace LR2Arena
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Log = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BmsMd5 = new System.Windows.Forms.TextBox();
@@ -40,6 +44,11 @@ namespace LR2Arena
             this.IpConfirm = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.Ip = new System.Windows.Forms.TextBox();
+            this.InjectDllButton = new System.Windows.Forms.Button();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.processorBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.processorBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // Log
@@ -131,11 +140,46 @@ namespace LR2Arena
             this.Ip.TabIndex = 10;
             this.Ip.TextChanged += new System.EventHandler(this.Ip_TextChanged);
             // 
+            // InjectDllButton
+            // 
+            this.InjectDllButton.Enabled = false;
+            this.InjectDllButton.Location = new System.Drawing.Point(12, 38);
+            this.InjectDllButton.Name = "InjectDllButton";
+            this.InjectDllButton.Size = new System.Drawing.Size(776, 63);
+            this.InjectDllButton.TabIndex = 11;
+            this.InjectDllButton.Text = "Inject DLL (make sure LR2 is running!)";
+            this.InjectDllButton.UseVisualStyleBackColor = true;
+            this.InjectDllButton.Click += new System.EventHandler(this.InjectDllButton_Click);
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.DataSource = this.processorBindingSource;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(12, 107);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series1.Legend = "Legend1";
+            series1.Name = "Score";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(776, 143);
+            this.chart1.TabIndex = 12;
+            this.chart1.Text = "chart1";
+            // 
+            // processorBindingSource
+            // 
+            this.processorBindingSource.DataSource = typeof(LR2Arena.Processor);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.InjectDllButton);
             this.Controls.Add(this.Ip);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.IpConfirm);
@@ -149,6 +193,8 @@ namespace LR2Arena
             this.Name = "Form1";
             this.Text = "LR2Arena";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.processorBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,6 +219,10 @@ namespace LR2Arena
         {
             BmsPath.Text = message;
         }
+        public System.Windows.Forms.DataVisualization.Charting.Chart GetGraph()
+        {
+            return chart1;
+        }
 
         private System.Windows.Forms.TextBox Log;
         private System.Windows.Forms.Label label1;
@@ -184,6 +234,9 @@ namespace LR2Arena
         private System.Windows.Forms.Button IpConfirm;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox Ip;
+        private System.Windows.Forms.Button InjectDllButton;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.BindingSource processorBindingSource;
     }
 }
 
