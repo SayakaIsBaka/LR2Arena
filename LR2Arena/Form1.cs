@@ -26,6 +26,7 @@ namespace LR2Arena
         {
             chart1.Series["Score"].Points.AddXY("You", "0");
             chart1.Series["Score"].Points.AddXY("P2", "0");
+            chart1.ChartAreas[0].AxisY.Maximum = 10000;
         }
 
         private void IpConfirm_Click(object sender, EventArgs e)

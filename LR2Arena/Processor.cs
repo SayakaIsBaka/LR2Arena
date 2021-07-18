@@ -11,15 +11,15 @@ namespace LR2Arena
         private BlockingCollection<byte[]> queue;
         private Form1 form;
         private String bmsMd5;
-        private uint p1exScore;
-        private uint p2exScore;
+        private static uint p1exScore;
+        private static uint p2exScore;
 
         public Processor(BlockingCollection<byte[]> queue, Form1 form)
         {
             this.queue = queue;
             this.form = form;
-            this.p1exScore = 0;
-            this.p2exScore = 0;
+            p1exScore = 0;
+            p2exScore = 0;
         }
 
         public void Process()
@@ -38,6 +38,10 @@ namespace LR2Arena
                             bmsMd5 = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                         }
                     }
+                    p1exScore = 0;
+                    p2exScore = 0;
+                    form.UpdateGraph(0, 0);
+                    form.UpdateGraph(0, 1);
                     form.SetBmsMd5TextBox(bmsMd5);
                     break;
                 case 2: // Score

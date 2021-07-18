@@ -221,8 +221,7 @@ namespace LR2Arena
         }
         public void UpdateGraph(uint value, int pointIndex)
         {
-            chart1.Series["Score"].Points[pointIndex].YValues[0] = value;
-            chart1.ResetAutoValues();
+            chart1.Series["Score"].Points[pointIndex].YValues[0] = (double)value;
             chart1.Refresh();
         }
 
