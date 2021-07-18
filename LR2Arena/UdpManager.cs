@@ -49,11 +49,24 @@ namespace LR2Arena
                 return false;
             }
             return true;
-        }    
+        }
+
+        public static void RemoteSendExScore(uint exScore)
+        {
+            byte[] data = BitConverter.GetBytes(exScore);
+            RemoteSend(data);
+        }
 
         public static void RemoteSend(byte[] data)
         {
-            remoteClient.SendAsync(data, data.Length, remoteEndpoint);
+            if (remoteEndpoint != null)
+            {
+                remoteClient.SendAsync(data, data.Length, remoteEndpoint);
+            }
+            else
+            {
+                Console.Error.WriteLine("No remote endpoint set!");
+            }
         }
     }
 }

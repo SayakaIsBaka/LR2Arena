@@ -162,8 +162,8 @@ namespace LR2Arena
         }
         public void AddLogTextBoxLine(string message)
         {
-            Log.Text += message;
-            Log.Text += Environment.NewLine;
+            Log.AppendText(message);
+            Log.AppendText(Environment.NewLine);
         }
         public void SetBmsMd5TextBox(string message)
         {

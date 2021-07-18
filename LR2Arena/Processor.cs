@@ -11,11 +11,15 @@ namespace LR2Arena
         private BlockingCollection<byte[]> queue;
         private Form1 form;
         private String bmsMd5;
+        private uint p1exScore;
+        private uint p2exScore;
 
         public Processor(BlockingCollection<byte[]> queue, Form1 form)
         {
             this.queue = queue;
             this.form = form;
+            this.p1exScore = 0;
+            this.p2exScore = 0;
         }
 
         public void Process()
@@ -45,12 +49,28 @@ namespace LR2Arena
                     uint maxCombo = BitConverter.ToUInt32(recvBuffer, 21);
                     uint score = BitConverter.ToUInt32(recvBuffer, 25);
                     uint exScore = great + 2 * pGreat;
-                    form.AddLogTextBoxLine($"PGreat: {pGreat}, Great: {great}, Good: {good}, Bad: {bad}, Poor: {poor}, Max combo: {maxCombo}, Score: {score}, ExScore: {exScore}");
-                    UdpManager.UpdatePacemaker(exScore);
+                    //form.AddLogTextBoxLine($"PGreat: {pGreat}, Great: {great}, Good: {good}, Bad: {bad}, Poor: {poor}, Max combo: {maxCombo}, Score: {score}, ExScore: {exScore}");
+                    if (exScore > p1exScore)
+                    {
+                        p1exScore = exScore;
+                        UdpManager.RemoteSendExScore(p1exScore);
+                    }
                     break;
                 default:
                     Console.Error.WriteLine("Invalid operation");
                     break;
+            }
+        }
+
+        public void ProcessRemote()
+        {
+            byte[] recvBuffer = queue.Take();
+            uint exScore = BitConverter.ToUInt32(recvBuffer, 0);
+            form.AddLogTextBoxLine($"+++ P2 ExScore: {exScore}");
+            if (exScore > p2exScore)
+            {
+                p2exScore = exScore;
+                UdpManager.UpdatePacemaker(p2exScore);
             }
         }
     }

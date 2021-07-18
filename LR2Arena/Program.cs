@@ -50,6 +50,15 @@ namespace LR2Arena
                 }
             });
 
+            Task.Run(() =>
+            {
+                Processor processor = new Processor(remoteQueue, form);
+                while (true)
+                {
+                    processor.ProcessRemote();
+                }
+            });
+
             Application.Run(form);
         }
 
