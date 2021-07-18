@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace LR2Arena
@@ -7,21 +9,32 @@ namespace LR2Arena
     class Processor
     {
         private BlockingCollection<byte[]> queue;
+        private Form1 form;
+        private String bmsMd5;
 
-        public Processor(BlockingCollection<byte[]> queue)
+        public Processor(BlockingCollection<byte[]> queue, Form1 form)
         {
             this.queue = queue;
+            this.form = form;
         }
 
         public void Process()
         {
             byte[] recvBuffer = queue.Take();
             int id = recvBuffer[0];
-            Console.WriteLine("Operation: " + id);
             switch (id) {
                 case 1: // BMS path
                     string bmsPath = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(1);
-                    Console.WriteLine(bmsPath);
+                    form.SetBmsPathTextBox(bmsPath);
+                    using (MD5 md5 = MD5.Create())
+                    {
+                        using (FileStream stream = File.OpenRead(bmsPath))
+                        {
+                            byte[] hash = md5.ComputeHash(stream);
+                            bmsMd5 = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                        }
+                    }
+                    form.SetBmsMd5TextBox(bmsMd5);
                     break;
                 case 2: // Score
                     uint poor = BitConverter.ToUInt32(recvBuffer, 1);
@@ -32,7 +45,7 @@ namespace LR2Arena
                     uint maxCombo = BitConverter.ToUInt32(recvBuffer, 21);
                     uint score = BitConverter.ToUInt32(recvBuffer, 25);
                     uint exScore = great + 2 * pGreat;
-                    Console.WriteLine($"PGreat: {pGreat}, Great: {great}, Good: {good}, Bad: {bad}, Poor: {poor}, Max combo: {maxCombo}, Score: {score}, ExScore: {exScore}");
+                    form.AddLogTextBoxLine($"PGreat: {pGreat}, Great: {great}, Good: {good}, Bad: {bad}, Poor: {poor}, Max combo: {maxCombo}, Score: {score}, ExScore: {exScore}");
                     UdpManager.UpdatePacemaker(exScore);
                     break;
                 default:

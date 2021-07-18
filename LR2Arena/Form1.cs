@@ -16,5 +16,15 @@ namespace LR2Arena
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void IpConfirm_Click(object sender, EventArgs e)
+        {
+            string ip = Ip.Text;
+        }
     }
 }

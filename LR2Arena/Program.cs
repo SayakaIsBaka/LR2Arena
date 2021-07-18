@@ -14,6 +14,10 @@ namespace LR2Arena
         [STAThread]
         static void Main()
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Form1 form = new Form1();
+
             string dllPath = AppDomain.CurrentDomain.BaseDirectory + "/LR2mind.dll";
             string[] processNames = { "LRHbody", "LR2body" };
             int ret = 0;
@@ -43,16 +47,14 @@ namespace LR2Arena
 
             Task.Run(() =>
             {
-                Processor processor = new Processor(queue);
+                Processor processor = new Processor(queue, form);
                 while (true)
                 {
                     processor.Process();
                 }
             });
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(form);
         }
     }
 }
