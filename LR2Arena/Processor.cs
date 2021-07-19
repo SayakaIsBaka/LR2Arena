@@ -10,7 +10,7 @@ namespace LR2Arena
     {
         private BlockingCollection<byte[]> queue;
         private Form1 form;
-        private String bmsMd5;
+        private static String bmsMd5;
         private static uint p1exScore;
         private static uint p2exScore;
 
@@ -38,6 +38,8 @@ namespace LR2Arena
                             bmsMd5 = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                         }
                     }
+                    UdpManager.RemoteSendWithId(2, Encoding.ASCII.GetBytes(bmsMd5));
+                    form.AddLogTextBoxLine("Waiting for P2 to be ready...");
                     p1exScore = 0;
                     p2exScore = 0;
                     form.UpdateGraph(0, 0);
@@ -70,13 +72,33 @@ namespace LR2Arena
         public void ProcessRemote()
         {
             byte[] recvBuffer = queue.Take();
-            uint exScore = BitConverter.ToUInt32(recvBuffer, 0);
-            form.AddLogTextBoxLine($"+++ P2 ExScore: {exScore}");
-            if (exScore > p2exScore)
+            int id = recvBuffer[0];
+            switch (id)
             {
-                p2exScore = exScore;
-                UdpManager.UpdatePacemaker(p2exScore);
-                form.UpdateGraph(p2exScore, 1);
+                case 1: // P2 exscore
+                    uint exScore = BitConverter.ToUInt32(recvBuffer, 1);
+                    form.AddLogTextBoxLine($"+++ P2 ExScore: {exScore}");
+                    if (exScore > p2exScore)
+                    {
+                        p2exScore = exScore;
+                        UdpManager.UpdatePacemaker(p2exScore);
+                        form.UpdateGraph(p2exScore, 1);
+                    }
+                    break;
+                case 2: // P2 hash (is ready)
+                    string p2Md5 = Encoding.ASCII.GetString(recvBuffer).Substring(1);
+                    form.AddLogTextBoxLine("Remote MD5: " + p2Md5);
+                    if (p2Md5.Equals(bmsMd5))
+                    {
+                        UdpManager.SendP2ReadyToLR2();
+                        form.AddLogTextBoxLine("P2 ready!");
+                    }
+                    else
+                    {
+                        UdpManager.SendP2ReadyToLR2();
+                        form.AddLogTextBoxLine($"Mismatching MD5: {bmsMd5} (local) vs {p2Md5} (remote)");
+                    }
+                    break;
             }
         }
     }
