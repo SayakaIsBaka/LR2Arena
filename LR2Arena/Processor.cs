@@ -39,13 +39,11 @@ namespace LR2Arena
                             bmsMd5 = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                         }
                     }
-                    UdpManager.RemoteSendWithId(2, Encoding.ASCII.GetBytes(bmsMd5));
+                    string bmsInfo = BuildBmsInfoString(bmsPath);
+                    UdpManager.RemoteSendWithId(2, Encoding.GetEncoding(932).GetBytes(bmsMd5 + bmsInfo));
                     sentHash = true;
                     form.AddLogTextBoxLine("Waiting for P2 to be ready...");
-                    p1exScore = 0;
-                    p2exScore = 0;
-                    form.UpdateGraph(0, 0);
-                    form.UpdateGraph(0, 1);
+                    ResetGraph();
                     form.SetBmsMd5TextBox(bmsMd5);
                     if (receivedHash) // Might be ready here if not host
                     {
@@ -92,7 +90,9 @@ namespace LR2Arena
                     }
                     break;
                 case 2: // P2 hash (is ready)
-                    p2Md5 = Encoding.ASCII.GetString(recvBuffer).Substring(1);
+                    p2Md5 = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(1, 32);
+                    string p2Bms = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(33);
+                    Console.WriteLine(p2Bms);
                     receivedHash = true;
                     form.AddLogTextBoxLine("Remote MD5: " + p2Md5);
                     if (sentHash) // Might be ready here if host
@@ -100,6 +100,40 @@ namespace LR2Arena
                         CheckHashAndSendP2Ready();
                     }
                     break;
+            }
+        }
+
+        private void ResetGraph()
+        {
+            p1exScore = 0;
+            p2exScore = 0;
+            form.UpdateGraph(0, 0);
+            form.UpdateGraph(0, 1);
+        }
+
+        private string BuildBmsInfoString(string bmsPath)
+        {
+            BmsHeader bms = GetInfoFromBMS(bmsPath);
+            if (bms == null)
+                return "";
+            return $"{bms.Title} {bms.SubTitle} / {bms.Artist} {bms.SubArtist}";
+        }
+
+        private BmsHeader GetInfoFromBMS(string bmsPath)
+        {
+            try
+            {
+                using (FileStream stream = File.OpenRead(bmsPath))
+                {
+                    BmsParser parser = new BmsParser();
+                    BmsHeader bms = parser.Parse(stream);
+                    return bms;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                return null;
             }
         }
 

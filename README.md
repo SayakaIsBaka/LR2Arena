@@ -27,3 +27,4 @@ You will need at least Visual Studio 2019 to build this project.
 ## Special thanks
 
 - Nothilvien for writing LR2mind's original code and the original injector's code (in C++) and basically giving me the motivation to actually make this (yet again)
+- Mushus for making [bms-parser](https://github.com/Mushus/bms-parser) (which I totally stole the code of for the BMS parsing part again)

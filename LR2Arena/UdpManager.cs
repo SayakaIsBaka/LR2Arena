@@ -28,7 +28,10 @@ namespace LR2Arena
             while (true)
             {
                 byte[] recvBuffer = udpClient.Receive(ref from);
-                queue.Add(recvBuffer);
+                if (recvBuffer.Length > 0)
+                {
+                    queue.Add(recvBuffer);
+                }
             }
         }
 
