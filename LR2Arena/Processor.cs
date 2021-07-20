@@ -68,6 +68,11 @@ namespace LR2Arena
                         form.UpdateGraph(p1exScore, 0);
                     }
                     break;
+                case 3: // Escaped
+                    form.AddLogTextBoxLine("Cancelled loading...");
+                    form.SetBmsInfoLocalTextBox("");
+                    CancelReady();
+                    break;
                 default:
                     Console.Error.WriteLine("Invalid operation");
                     break;
@@ -100,6 +105,11 @@ namespace LR2Arena
                     {
                         CheckHashAndSendP2Ready();
                     }
+                    break;
+                case 3: // Escaped
+                    receivedHash = false;
+                    form.AddLogTextBoxLine("P2 went back to the menu...");
+                    form.SetBmsInfoRemoteTextBox("");
                     break;
             }
         }
@@ -153,6 +163,12 @@ namespace LR2Arena
             {
                 form.AddLogTextBoxLine($"Mismatching MD5: {bmsMd5} (local) vs {p2Md5} (remote)");
             }
+        }
+
+        private void CancelReady()
+        {
+            sentHash = false;
+            UdpManager.RemoteSend(new byte[] { 3 });
         }
 
         private void SendP2ReadyToLR2()

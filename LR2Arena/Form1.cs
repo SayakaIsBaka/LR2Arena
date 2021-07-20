@@ -107,6 +107,7 @@ namespace LR2Arena
         private void UnfreezeLr2_Click(object sender, EventArgs e)
         {
             UdpManager.SendP2ReadyToLR2();
+            UdpManager.RemoteSend(new byte[] { 3 }, "127.0.0.1", 2222);
         }
     }
 }

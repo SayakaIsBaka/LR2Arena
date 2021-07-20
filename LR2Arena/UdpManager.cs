@@ -92,5 +92,10 @@ namespace LR2Arena
                 Console.Error.WriteLine("No remote endpoint set!");
             }
         }
+
+        public static void RemoteSend(byte[] data, string ipAddress, int port)
+        {
+            remoteClient.SendAsync(data, data.Length, ipAddress, port);
+        }
     }
 }
