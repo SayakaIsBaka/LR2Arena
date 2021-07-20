@@ -60,5 +60,10 @@ namespace LR2Arena
                 InjectDllButton.Text = "Successfully injected DLL!";
             }
         }
+
+        private void ShowIp_CheckedChanged(object sender, EventArgs e)
+        {
+            Ip.UseSystemPasswordChar = !Ip.UseSystemPasswordChar;
+        }
     }
 }
