@@ -40,6 +40,7 @@ namespace LR2Arena
                         }
                     }
                     string bmsInfo = BuildBmsInfoString(bmsPath);
+                    form.SetBmsInfoLocalTextBox(bmsInfo);
                     UdpManager.RemoteSendWithId(2, Encoding.GetEncoding(932).GetBytes(bmsMd5 + bmsInfo));
                     sentHash = true;
                     form.AddLogTextBoxLine("Waiting for P2 to be ready...");
@@ -92,7 +93,7 @@ namespace LR2Arena
                 case 2: // P2 hash (is ready)
                     p2Md5 = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(1, 32);
                     string p2Bms = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(33);
-                    Console.WriteLine(p2Bms);
+                    form.SetBmsInfoRemoteTextBox(p2Bms);
                     receivedHash = true;
                     form.AddLogTextBoxLine("Remote MD5: " + p2Md5);
                     if (sentHash) // Might be ready here if host

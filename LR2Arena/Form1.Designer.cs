@@ -30,8 +30,8 @@ namespace LR2Arena
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Log = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BmsMd5 = new System.Windows.Forms.TextBox();
@@ -45,12 +45,17 @@ namespace LR2Arena
             this.InjectDllButton = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ShowIp = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.bmsInfoLocal = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.bmsInfoRemote = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // Log
             // 
-            this.Log.Location = new System.Drawing.Point(12, 357);
+            this.Log.Location = new System.Drawing.Point(12, 471);
             this.Log.Multiline = true;
             this.Log.Name = "Log";
             this.Log.ReadOnly = true;
@@ -61,7 +66,7 @@ namespace LR2Arena
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 338);
+            this.label1.Location = new System.Drawing.Point(12, 452);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(28, 13);
             this.label1.TabIndex = 2;
@@ -152,17 +157,17 @@ namespace LR2Arena
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.Transparent;
-            chartArea4.AxisX.MajorGrid.Enabled = false;
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.Location = new System.Drawing.Point(12, 107);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series4.IsValueShownAsLabel = true;
-            series4.IsVisibleInLegend = false;
-            series4.Name = "Score";
-            this.chart1.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series2.IsValueShownAsLabel = true;
+            series2.IsVisibleInLegend = false;
+            series2.Name = "Score";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(776, 143);
             this.chart1.TabIndex = 12;
             this.chart1.Text = "chart1";
@@ -178,11 +183,59 @@ namespace LR2Arena
             this.ShowIp.UseVisualStyleBackColor = true;
             this.ShowIp.CheckedChanged += new System.EventHandler(this.ShowIp_CheckedChanged);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 385);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(33, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Local";
+            // 
+            // bmsInfoLocal
+            // 
+            this.bmsInfoLocal.Location = new System.Drawing.Point(62, 382);
+            this.bmsInfoLocal.Name = "bmsInfoLocal";
+            this.bmsInfoLocal.ReadOnly = true;
+            this.bmsInfoLocal.Size = new System.Drawing.Size(726, 20);
+            this.bmsInfoLocal.TabIndex = 16;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 411);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(44, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Remote";
+            // 
+            // bmsInfoRemote
+            // 
+            this.bmsInfoRemote.Location = new System.Drawing.Point(62, 408);
+            this.bmsInfoRemote.Name = "bmsInfoRemote";
+            this.bmsInfoRemote.ReadOnly = true;
+            this.bmsInfoRemote.Size = new System.Drawing.Size(726, 20);
+            this.bmsInfoRemote.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 357);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "BMS info:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 564);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.bmsInfoLocal);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.bmsInfoRemote);
             this.Controls.Add(this.ShowIp);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.InjectDllButton);
@@ -207,29 +260,6 @@ namespace LR2Arena
 
         #endregion
 
-        public void SetLogTextBox(string message)
-        {
-            Log.Text = message;
-        }
-        public void AddLogTextBoxLine(string message)
-        {
-            Log.AppendText(message);
-            Log.AppendText(Environment.NewLine);
-        }
-        public void SetBmsMd5TextBox(string message)
-        {
-            BmsMd5.Text = message;
-        }
-        public void SetBmsPathTextBox(string message)
-        {
-            BmsPath.Text = message;
-        }
-        public void UpdateGraph(uint value, int pointIndex)
-        {
-            chart1.Series["Score"].Points[pointIndex].YValues[0] = (double)value;
-            chart1.Refresh();
-        }
-
         private System.Windows.Forms.TextBox Log;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox BmsMd5;
@@ -243,6 +273,11 @@ namespace LR2Arena
         private System.Windows.Forms.Button InjectDllButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.CheckBox ShowIp;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox bmsInfoLocal;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox bmsInfoRemote;
+        private System.Windows.Forms.Label label8;
     }
 }
 

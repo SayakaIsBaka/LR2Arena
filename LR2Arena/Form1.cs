@@ -65,5 +65,42 @@ namespace LR2Arena
         {
             Ip.UseSystemPasswordChar = !Ip.UseSystemPasswordChar;
         }
+
+        public void SetLogTextBox(string message)
+        {
+            Log.Text = message;
+        }
+
+        public void AddLogTextBoxLine(string message)
+        {
+            Log.AppendText(message);
+            Log.AppendText(Environment.NewLine);
+        }
+
+        public void SetBmsMd5TextBox(string message)
+        {
+            BmsMd5.Text = message;
+        }
+
+        public void SetBmsPathTextBox(string message)
+        {
+            BmsPath.Text = message;
+        }
+
+        public void UpdateGraph(uint value, int pointIndex)
+        {
+            chart1.Series["Score"].Points[pointIndex].YValues[0] = (double)value;
+            chart1.Refresh();
+        }
+
+        public void SetBmsInfoLocalTextBox(string message)
+        {
+            bmsInfoLocal.Text = message;
+        }
+
+        public void SetBmsInfoRemoteTextBox(string message)
+        {
+            bmsInfoRemote.Text = message;
+        }
     }
 }
