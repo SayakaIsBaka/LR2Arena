@@ -17,7 +17,7 @@ You will need at least Visual Studio 2019 to build this project.
 
 ## TODO
 
-- Parse BMS file to send metadata
+- Random sync (maybe)
 - Fix sync not working if replaying the same chart twice in a row (related to hook, not easily fixable)
 - Fix the 1-note late pacemaker "bug" (most likely related to latency, might not be fixable)
 - Update pacemaker as soon as the DLL gets the packet instead of when the player hits a note (maybe)
