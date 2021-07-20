@@ -58,6 +58,7 @@ namespace LR2Arena
             {
                 InjectDllButton.Enabled = false;
                 InjectDllButton.Text = "Successfully injected DLL!";
+                UnfreezeLr2.Enabled = true;
             }
         }
 
@@ -101,6 +102,11 @@ namespace LR2Arena
         public void SetBmsInfoRemoteTextBox(string message)
         {
             bmsInfoRemote.Text = message;
+        }
+
+        private void UnfreezeLr2_Click(object sender, EventArgs e)
+        {
+            UdpManager.SendP2ReadyToLR2();
         }
     }
 }

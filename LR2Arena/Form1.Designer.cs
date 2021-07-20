@@ -30,8 +30,8 @@ namespace LR2Arena
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Log = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BmsMd5 = new System.Windows.Forms.TextBox();
@@ -50,6 +50,7 @@ namespace LR2Arena
             this.label7 = new System.Windows.Forms.Label();
             this.bmsInfoRemote = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.UnfreezeLr2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -148,7 +149,7 @@ namespace LR2Arena
             this.InjectDllButton.Enabled = false;
             this.InjectDllButton.Location = new System.Drawing.Point(12, 38);
             this.InjectDllButton.Name = "InjectDllButton";
-            this.InjectDllButton.Size = new System.Drawing.Size(776, 63);
+            this.InjectDllButton.Size = new System.Drawing.Size(623, 63);
             this.InjectDllButton.TabIndex = 11;
             this.InjectDllButton.Text = "Inject DLL (make sure LR2 is running!)";
             this.InjectDllButton.UseVisualStyleBackColor = true;
@@ -157,17 +158,17 @@ namespace LR2Arena
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.MajorGrid.Enabled = false;
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.Location = new System.Drawing.Point(12, 107);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series2.IsValueShownAsLabel = true;
-            series2.IsVisibleInLegend = false;
-            series2.Name = "Score";
-            this.chart1.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series4.IsValueShownAsLabel = true;
+            series4.IsVisibleInLegend = false;
+            series4.Name = "Score";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(776, 143);
             this.chart1.TabIndex = 12;
             this.chart1.Text = "chart1";
@@ -226,11 +227,23 @@ namespace LR2Arena
             this.label8.TabIndex = 18;
             this.label8.Text = "BMS info:";
             // 
+            // UnfreezeLr2
+            // 
+            this.UnfreezeLr2.Enabled = false;
+            this.UnfreezeLr2.Location = new System.Drawing.Point(641, 39);
+            this.UnfreezeLr2.Name = "UnfreezeLr2";
+            this.UnfreezeLr2.Size = new System.Drawing.Size(147, 62);
+            this.UnfreezeLr2.TabIndex = 19;
+            this.UnfreezeLr2.Text = "Force P2 ready (if stuck on loading)";
+            this.UnfreezeLr2.UseVisualStyleBackColor = true;
+            this.UnfreezeLr2.Click += new System.EventHandler(this.UnfreezeLr2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 564);
+            this.Controls.Add(this.UnfreezeLr2);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.bmsInfoLocal);
@@ -278,6 +291,7 @@ namespace LR2Arena
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox bmsInfoRemote;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button UnfreezeLr2;
     }
 }
 
