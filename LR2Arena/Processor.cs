@@ -10,16 +10,17 @@ namespace LR2Arena
     {
         private BlockingCollection<byte[]> queue;
         private Form1 form;
-        private static String bmsMd5;
-        private static uint p1exScore;
-        private static uint p2exScore;
+        private static String bmsMd5 = "";
+        private static String p2Md5 = "";
+        private static bool sentHash = false;
+        private static bool receivedHash = false;
+        private static uint p1exScore = 0;
+        private static uint p2exScore = 0;
 
         public Processor(BlockingCollection<byte[]> queue, Form1 form)
         {
             this.queue = queue;
             this.form = form;
-            p1exScore = 0;
-            p2exScore = 0;
         }
 
         public void Process()
@@ -39,12 +40,17 @@ namespace LR2Arena
                         }
                     }
                     UdpManager.RemoteSendWithId(2, Encoding.ASCII.GetBytes(bmsMd5));
+                    sentHash = true;
                     form.AddLogTextBoxLine("Waiting for P2 to be ready...");
                     p1exScore = 0;
                     p2exScore = 0;
                     form.UpdateGraph(0, 0);
                     form.UpdateGraph(0, 1);
                     form.SetBmsMd5TextBox(bmsMd5);
+                    if (receivedHash) // Might be ready here if not host
+                    {
+                        CheckHashAndSendP2Ready();
+                    }
                     break;
                 case 2: // Score
                     uint poor = BitConverter.ToUInt32(recvBuffer, 1);
@@ -86,20 +92,39 @@ namespace LR2Arena
                     }
                     break;
                 case 2: // P2 hash (is ready)
-                    string p2Md5 = Encoding.ASCII.GetString(recvBuffer).Substring(1);
+                    p2Md5 = Encoding.ASCII.GetString(recvBuffer).Substring(1);
+                    receivedHash = true;
                     form.AddLogTextBoxLine("Remote MD5: " + p2Md5);
-                    if (p2Md5.Equals(bmsMd5))
+                    if (sentHash) // Might be ready here if host
                     {
-                        UdpManager.SendP2ReadyToLR2();
-                        form.AddLogTextBoxLine("P2 ready!");
-                    }
-                    else
-                    {
-                        UdpManager.SendP2ReadyToLR2();
-                        form.AddLogTextBoxLine($"Mismatching MD5: {bmsMd5} (local) vs {p2Md5} (remote)");
+                        CheckHashAndSendP2Ready();
                     }
                     break;
             }
+        }
+
+        private void CheckHashAndSendP2Ready()
+        {
+            Console.WriteLine("-----");
+            Console.WriteLine("p2md5: " + p2Md5);
+            Console.WriteLine("bmsMd5: " + bmsMd5);
+
+            if (p2Md5.Equals(bmsMd5))
+            {
+                SendP2ReadyToLR2();
+                form.AddLogTextBoxLine("P2 ready!");
+            }
+            else
+            {
+                form.AddLogTextBoxLine($"Mismatching MD5: {bmsMd5} (local) vs {p2Md5} (remote)");
+            }
+        }
+
+        private void SendP2ReadyToLR2()
+        {
+            sentHash = false;
+            receivedHash = false;
+            UdpManager.SendP2ReadyToLR2();
         }
     }
 }
