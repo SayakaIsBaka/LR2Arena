@@ -19,12 +19,11 @@ You will need at least Visual Studio 2019 to build this project.
 
 ## TODO
 
-- Accept FQDN for IP
 - Random sync (maybe)
 - Fix sync not working if replaying the same chart twice in a row (related to hook, not easily fixable)
 - Fix the 1-note late pacemaker "bug" (most likely related to latency, might not be fixable)
 - Update pacemaker as soon as the DLL gets the packet instead of when the player hits a note (maybe)
-- Making LR2mind not broadcast the message on UDP but instead only send it on localhost (low priority)
+- Overlay on LR2??? (probably not)
 
 ## Special thanks
 

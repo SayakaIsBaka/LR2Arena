@@ -12,7 +12,8 @@ namespace LR2Arena
         private BlockingCollection<byte[]> queue;
         static readonly UdpClient pacemakerClient = new UdpClient();
         static readonly UdpClient remoteClient = new UdpClient();
-        static IPEndPoint remoteEndpoint;
+        static string remoteEndpoint = "";
+        static int remotePort = 0;
 
         public UdpManager(int port, BlockingCollection<byte[]> queue)
         {
@@ -50,14 +51,10 @@ namespace LR2Arena
 
         public static bool SetRemoteAddress(string ipAddress, int port)
         {
-            try
-            {
-                UdpManager.remoteEndpoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
-            } catch (Exception e)
-            {
-                Console.Error.WriteLine(e.ToString());
+            if (Uri.CheckHostName(ipAddress) == UriHostNameType.Unknown)
                 return false;
-            }
+            UdpManager.remoteEndpoint = ipAddress;
+            UdpManager.remotePort = port;
             return true;
         }
 
@@ -83,9 +80,9 @@ namespace LR2Arena
 
         public static void RemoteSend(byte[] data)
         {
-            if (remoteEndpoint != null)
+            if (remoteEndpoint.Length > 0)
             {
-                remoteClient.SendAsync(data, data.Length, remoteEndpoint);
+                remoteClient.SendAsync(data, data.Length, remoteEndpoint, remotePort);
             }
             else
             {
