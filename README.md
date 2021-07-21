@@ -22,8 +22,6 @@ You will need at least Visual Studio 2019 to build this project.
 - Random sync (maybe)
 - Config file
 - Fix sync not working if replaying the same chart twice in a row (related to hook, not easily fixable)
-- Fix the 1-note late pacemaker "bug" (most likely related to latency, might not be fixable)
-- Update pacemaker as soon as the DLL gets the packet instead of when the player hits a note (maybe)
 - Overlay on LR2??? (probably not)
 
 ## Special thanks
