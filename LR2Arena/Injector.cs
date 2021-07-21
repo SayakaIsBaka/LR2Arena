@@ -28,7 +28,7 @@ namespace LR2Arena
             Console.WriteLine(processName + " process found");
 
             Process lr2Process = lr2Processes[0];
-            uint dllPathLength = (uint)((dllPath.Length + 1) * Marshal.SizeOf(typeof(char)));
+            uint dllPathLength = (uint)((dllPath.Length + 1) * sizeof(char));
 
             IntPtr lr2ProcHandle = Imports.OpenProcess(Imports.PROCESS_CREATE_THREAD | Imports.PROCESS_QUERY_INFORMATION | Imports.PROCESS_VM_OPERATION | Imports.PROCESS_VM_WRITE | Imports.PROCESS_VM_READ, false, lr2Process.Id);
             if (lr2ProcHandle == IntPtr.Zero)
@@ -37,11 +37,11 @@ namespace LR2Arena
                 return 1;
             }
 
-            IntPtr loadLibraryAddr = Imports.GetProcAddress(Imports.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            IntPtr loadLibraryAddr = Imports.GetProcAddress(Imports.GetModuleHandle("kernel32.dll"), "LoadLibraryW");
             IntPtr mindBaseAddress = Imports.VirtualAllocEx(lr2ProcHandle, IntPtr.Zero, dllPathLength, Imports.MEM_COMMIT, Imports.PAGE_EXECUTE_READWRITE);
 
             UIntPtr bytesWritten;
-            Imports.WriteProcessMemory(lr2ProcHandle, mindBaseAddress, Encoding.Default.GetBytes(dllPath), dllPathLength, out bytesWritten);
+            Imports.WriteProcessMemory(lr2ProcHandle, mindBaseAddress, dllPath, dllPathLength, out bytesWritten);
 
             IntPtr loadThread = Imports.CreateRemoteThread(lr2ProcHandle, IntPtr.Zero, 0, loadLibraryAddr, mindBaseAddress, 0, IntPtr.Zero);
             if (loadThread == IntPtr.Zero)

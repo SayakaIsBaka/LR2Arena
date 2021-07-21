@@ -25,7 +25,6 @@ You will need at least Visual Studio 2019 to build this project.
 - Fix the 1-note late pacemaker "bug" (most likely related to latency, might not be fixable)
 - Update pacemaker as soon as the DLL gets the packet instead of when the player hits a note (maybe)
 - Making LR2mind not broadcast the message on UDP but instead only send it on localhost (low priority)
-- Make the program work if the DLL's path contains non-ASCII characters
 
 ## Special thanks
 
