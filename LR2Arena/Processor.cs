@@ -111,6 +111,16 @@ namespace LR2Arena
                     form.AddLogTextBoxLine("P2 went back to the menu...");
                     form.SetBmsInfoRemoteTextBox("");
                     break;
+                case 98: // Connectivity check (request)
+                    UdpManager.SendConnectivityRequestAnswer();
+                    break;
+                case 99: // Connectivity check (answer)
+                    form.EnableConnectivityCheckButton();
+                    break;
+                default:
+                    Console.Error.WriteLine("Invalid operation");
+                    break;
+
             }
         }
 

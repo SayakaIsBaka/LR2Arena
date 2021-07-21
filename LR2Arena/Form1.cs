@@ -59,6 +59,7 @@ namespace LR2Arena
                 InjectDllButton.Enabled = false;
                 InjectDllButton.Text = "Successfully injected DLL!";
                 UnfreezeLr2.Enabled = true;
+                ConnectivityCheck.Enabled = true;
             }
         }
 
@@ -104,10 +105,34 @@ namespace LR2Arena
             bmsInfoRemote.Text = message;
         }
 
+        public void EnableConnectivityCheckButton()
+        {
+            ConnectivityCheck.Enabled = true;
+        }
+
         private void UnfreezeLr2_Click(object sender, EventArgs e)
         {
             UdpManager.SendP2ReadyToLR2();
             UdpManager.RemoteSend(new byte[] { 3 }, "127.0.0.1", 2222);
+        }
+
+        private void ConnectivityCheck_Click(object sender, EventArgs e)
+        {
+            ConnectivityCheck.Enabled = false;
+            var task = Task.Run(() => PerformConnectivityCheck());
+            if (task.Wait(TimeSpan.FromSeconds(5)))
+                AddLogTextBoxLine("Connectivity check successful!");
+            else
+            {
+                MessageBox.Show("Connectivity check failed... (timeout), are ports correctly set up?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ConnectivityCheck.Enabled = true;
+            }
+        }
+
+        private void PerformConnectivityCheck()
+        {
+            UdpManager.SendConnectivityCheckRequest();
+            while (!ConnectivityCheck.Enabled); // Wait for answer
         }
     }
 }

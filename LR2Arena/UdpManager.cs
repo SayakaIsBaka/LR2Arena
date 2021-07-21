@@ -78,11 +78,20 @@ namespace LR2Arena
             RemoteSend(dataWithId);
         }
 
+        public static void SendConnectivityCheckRequest()
+        {
+            RemoteSend(new byte[] { 98 });
+        }
+        public static void SendConnectivityRequestAnswer()
+        {
+            RemoteSend(new byte[] { 99 });
+        }
+
         public static void RemoteSend(byte[] data)
         {
             if (remoteEndpoint.Length > 0)
             {
-                remoteClient.SendAsync(data, data.Length, remoteEndpoint, remotePort);
+                RemoteSend(data, remoteEndpoint, remotePort);
             }
             else
             {
@@ -92,7 +101,14 @@ namespace LR2Arena
 
         public static void RemoteSend(byte[] data, string ipAddress, int port)
         {
-            remoteClient.SendAsync(data, data.Length, ipAddress, port);
+            try
+            {
+                remoteClient.SendAsync(data, data.Length, ipAddress, port);
+            } catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                Console.Error.WriteLine("Error while sending packet, wrong hostname?");
+            }
         }
     }
 }
