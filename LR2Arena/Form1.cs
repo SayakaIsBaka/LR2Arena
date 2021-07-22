@@ -134,5 +134,10 @@ namespace LR2Arena
             UdpManager.SendConnectivityCheckRequest();
             while (!ConnectivityCheck.Enabled); // Wait for answer
         }
+
+        private void AlwaysOnTop_CheckedChanged(object sender, EventArgs e)
+        {
+            TopMost = !TopMost;
+        }
     }
 }

@@ -52,6 +52,7 @@ namespace LR2Arena
             this.label8 = new System.Windows.Forms.Label();
             this.UnfreezeLr2 = new System.Windows.Forms.Button();
             this.ConnectivityCheck = new System.Windows.Forms.Button();
+            this.AlwaysOnTop = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -250,11 +251,25 @@ namespace LR2Arena
             this.ConnectivityCheck.UseVisualStyleBackColor = true;
             this.ConnectivityCheck.Click += new System.EventHandler(this.ConnectivityCheck_Click);
             // 
+            // AlwaysOnTop
+            // 
+            this.AlwaysOnTop.AutoSize = true;
+            this.AlwaysOnTop.Checked = true;
+            this.AlwaysOnTop.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AlwaysOnTop.Location = new System.Drawing.Point(12, 558);
+            this.AlwaysOnTop.Name = "AlwaysOnTop";
+            this.AlwaysOnTop.Size = new System.Drawing.Size(194, 17);
+            this.AlwaysOnTop.TabIndex = 21;
+            this.AlwaysOnTop.Text = "Make LR2Arena always stay on top";
+            this.AlwaysOnTop.UseVisualStyleBackColor = true;
+            this.AlwaysOnTop.CheckedChanged += new System.EventHandler(this.AlwaysOnTop_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 564);
+            this.ClientSize = new System.Drawing.Size(800, 582);
+            this.Controls.Add(this.AlwaysOnTop);
             this.Controls.Add(this.ConnectivityCheck);
             this.Controls.Add(this.UnfreezeLr2);
             this.Controls.Add(this.label8);
@@ -307,6 +322,7 @@ namespace LR2Arena
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button UnfreezeLr2;
         private System.Windows.Forms.Button ConnectivityCheck;
+        private System.Windows.Forms.CheckBox AlwaysOnTop;
     }
 }
 
