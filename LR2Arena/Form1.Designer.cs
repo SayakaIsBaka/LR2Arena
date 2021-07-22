@@ -30,8 +30,8 @@ namespace LR2Arena
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Log = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BmsMd5 = new System.Windows.Forms.TextBox();
@@ -159,17 +159,17 @@ namespace LR2Arena
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Location = new System.Drawing.Point(12, 107);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series2.IsValueShownAsLabel = true;
-            series2.IsVisibleInLegend = false;
-            series2.Name = "Score";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series1.IsValueShownAsLabel = true;
+            series1.IsVisibleInLegend = false;
+            series1.Name = "Score";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(776, 143);
             this.chart1.TabIndex = 12;
             this.chart1.Text = "chart1";
@@ -277,6 +277,7 @@ namespace LR2Arena
             this.Controls.Add(this.Log);
             this.Name = "Form1";
             this.Text = "LR2Arena";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
