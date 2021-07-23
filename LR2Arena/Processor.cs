@@ -29,7 +29,8 @@ namespace LR2Arena
             int id = recvBuffer[0];
             switch (id) {
                 case 1: // BMS path
-                    byte[] generatedRandom = ParseRandom(recvBuffer, false);
+                    byte[] generatedRandom = ParseRandom(recvBuffer);
+                    LogRandom(generatedRandom, false);
                     string bmsPath = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * sizeof(uint), recvBuffer.Length - 1 - 7 * sizeof(uint));
                     form.SetBmsPathTextBox(bmsPath);
                     using (MD5 md5 = MD5.Create())
@@ -101,7 +102,7 @@ namespace LR2Arena
                     }
                     break;
                 case 2: // P2 hash (is ready)
-                    byte[] receivedRandom = ParseRandom(recvBuffer, true);
+                    byte[] receivedRandom = ParseRandom(recvBuffer);
                     string bmsInfo = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * sizeof(uint), recvBuffer.Length - 1 - 7 * sizeof(uint));
                     p2Md5 = bmsInfo.Substring(0, 32);
                     string p2Bms = bmsInfo.Substring(32);
@@ -115,6 +116,7 @@ namespace LR2Arena
                     else
                     {
                         UdpManager.SendRandomToLR2(receivedRandom);
+                        LogRandom(receivedRandom, true);
                     }
                     break;
                 case 3: // Escaped
@@ -135,21 +137,25 @@ namespace LR2Arena
             }
         }
 
-        private byte[] ParseRandom(byte[] buffer, bool remote)
+        private byte[] ParseRandom(byte[] buffer)
         {
             byte[] currentRandom = new byte[7 * sizeof(uint)];
-            uint[] currentRandomUint = new uint[7];
             Buffer.BlockCopy(buffer, 1, currentRandom, 0, 7 * sizeof(uint));
-            Buffer.BlockCopy(buffer, 1, currentRandomUint, 0, 7 * sizeof(uint));
+            return currentRandom;
+        }
+
+        private void LogRandom(byte[] random, bool remote)
+        {
+            uint[] randomUint = new uint[7];
+            Buffer.BlockCopy(random, 0, randomUint, 0, 7 * sizeof(uint));
             string textRandom = "Generated random:";
             if (remote)
-                textRandom = "Received random:";
-            for (int i = 0; i < currentRandomUint.Length; i++)
+                textRandom = "Received random to apply: ";
+            for (int i = 0; i < randomUint.Length; i++)
             {
-                textRandom += $" {currentRandomUint[i]}";
+                textRandom += $" {randomUint[i]}";
             }
             form.AddLogTextBoxLine(textRandom);
-            return currentRandom;
         }
 
         private void ResetGraph()
