@@ -29,7 +29,8 @@ namespace LR2Arena
             int id = recvBuffer[0];
             switch (id) {
                 case 1: // BMS path
-                    string bmsPath = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * 4, recvBuffer.Length - 1 - 7 * 4 );
+                    byte[] generatedRandom = ParseRandom(recvBuffer, false);
+                    string bmsPath = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * sizeof(uint), recvBuffer.Length - 1 - 7 * sizeof(uint));
                     form.SetBmsPathTextBox(bmsPath);
                     using (MD5 md5 = MD5.Create())
                     {
@@ -41,7 +42,11 @@ namespace LR2Arena
                     }
                     string bmsInfo = BuildBmsInfoString(bmsPath);
                     form.SetBmsInfoLocalTextBox(bmsInfo);
-                    UdpManager.RemoteSendWithId(2, Encoding.GetEncoding(932).GetBytes(bmsMd5 + bmsInfo));
+                    byte[] byteBmsInfo = Encoding.GetEncoding(932).GetBytes(bmsMd5 + bmsInfo);
+                    byte[] dataToSend = new byte[generatedRandom.Length + byteBmsInfo.Length];
+                    Buffer.BlockCopy(generatedRandom, 0, dataToSend, 0, generatedRandom.Length);
+                    Buffer.BlockCopy(byteBmsInfo, 0, dataToSend, generatedRandom.Length, byteBmsInfo.Length);
+                    UdpManager.RemoteSendWithId(2, dataToSend);
                     sentHash = true;
                     form.AddLogTextBoxLine("Waiting for P2 to be ready...");
                     ResetGraph();
@@ -96,14 +101,20 @@ namespace LR2Arena
                     }
                     break;
                 case 2: // P2 hash (is ready)
-                    p2Md5 = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(1, 32);
-                    string p2Bms = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(33);
+                    byte[] receivedRandom = ParseRandom(recvBuffer, true);
+                    string bmsInfo = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * sizeof(uint), recvBuffer.Length - 1 - 7 * sizeof(uint));
+                    p2Md5 = bmsInfo.Substring(0, 32);
+                    string p2Bms = bmsInfo.Substring(32);
                     form.SetBmsInfoRemoteTextBox(p2Bms);
                     receivedHash = true;
                     form.AddLogTextBoxLine("Remote MD5: " + p2Md5);
                     if (sentHash) // Might be ready here if host
                     {
                         CheckHashAndSendP2Ready();
+                    }
+                    else
+                    {
+                        UdpManager.SendRandomToLR2(receivedRandom);
                     }
                     break;
                 case 3: // Escaped
@@ -122,6 +133,23 @@ namespace LR2Arena
                     break;
 
             }
+        }
+
+        private byte[] ParseRandom(byte[] buffer, bool remote)
+        {
+            byte[] currentRandom = new byte[7 * sizeof(uint)];
+            uint[] currentRandomUint = new uint[7];
+            Buffer.BlockCopy(buffer, 1, currentRandom, 0, 7 * sizeof(uint));
+            Buffer.BlockCopy(buffer, 1, currentRandomUint, 0, 7 * sizeof(uint));
+            string textRandom = "Generated random:";
+            if (remote)
+                textRandom = "Received random:";
+            for (int i = 0; i < currentRandomUint.Length; i++)
+            {
+                textRandom += $" {currentRandomUint[i]}";
+            }
+            form.AddLogTextBoxLine(textRandom);
+            return currentRandom;
         }
 
         private void ResetGraph()

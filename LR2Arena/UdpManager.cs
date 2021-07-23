@@ -47,7 +47,13 @@ namespace LR2Arena
         {
             byte[] data = { 2 };
             pacemakerClient.SendAsync(data, data.Length, "127.0.0.1", 2223);
-        }    
+        }
+
+        public static void SendRandomToLR2(byte[] random)
+        {
+            byte[] dataWithId = AddIdToData(3, random);
+            pacemakerClient.SendAsync(dataWithId, dataWithId.Length, "127.0.0.1", 2223);
+        }
 
         public static bool SetRemoteAddress(string ipAddress, int port)
         {

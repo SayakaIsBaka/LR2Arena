@@ -20,7 +20,7 @@ If you wish to develop a new implant for LR2Arena, you need to implement the fol
 ```
 [ 1 | random (28 bytes) | path (n bytes) ]
 ```
-`random` can be anything you want as long as both players can play using the same random with it; this is the implant's duty to implement it properly. In LR2mind's implementation, `random` does **NOT** correspond to the lanes' order.
+`random` can be anything you want as long as both players can play using the same random with it; this is the implant's duty to implement it properly. In LR2mind's implementation, `random` does **NOT** correspond to the lanes' order. `random` **always** has to be generated, even if the player did not choose the Random option.
 - `2`: returns the player's current score data. It should be sent on each note. Packet format is as follows (note that the `score` field refers to the old-style score (out of 200000) and not the exscore):
 ```
 [ 2 | poor (4 bytes) | bad (4 bytes) | good (4 bytes) | great (4 bytes) | pgreat (4 bytes) | max_combo (4 bytes) | score (4 bytes) ]
@@ -31,3 +31,4 @@ If you wish to develop a new implant for LR2Arena, you need to implement the fol
 
 - `1`: receives the remote player's exscore. It can be used to update the pacemaker in-game. `data` is a 4-byte long unsigned int (little-endian).
 - `2`: notifies that the remote player is ready and has selected the correct chart. Can be used for syncing between clients. `data` is not checked, so it can be empty.
+- `3`: receives a random to use for the next chart. This is always sent, even if the player did not choose the Random option.
