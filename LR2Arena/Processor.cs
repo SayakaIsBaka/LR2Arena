@@ -29,7 +29,7 @@ namespace LR2Arena
             int id = recvBuffer[0];
             switch (id) {
                 case 1: // BMS path
-                    string bmsPath = Encoding.GetEncoding(932).GetString(recvBuffer).Substring(1);
+                    string bmsPath = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * 4, recvBuffer.Length - 1 - 7 * 4 );
                     form.SetBmsPathTextBox(bmsPath);
                     using (MD5 md5 = MD5.Create())
                     {
