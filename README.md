@@ -19,7 +19,6 @@ You will need at least Visual Studio 2019 to build this project.
 
 ## TODO
 
-- Fix sync not working if replaying the same chart twice in a row (related to hook, not easily fixable)
 - Overlay on LR2??? (probably not)
 
 ## Special thanks
