@@ -19,7 +19,19 @@ namespace LR2Arena
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.UpgradeRequired)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeRequired = false;
+                Properties.Settings.Default.Save();
+            }
+            Ip.UseSystemPasswordChar = !Properties.Settings.Default.ShowIp;
             FillChart();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
 
         private void FillChart()

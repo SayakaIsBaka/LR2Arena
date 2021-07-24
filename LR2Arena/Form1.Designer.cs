@@ -30,8 +30,8 @@ namespace LR2Arena
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Log = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BmsMd5 = new System.Windows.Forms.TextBox();
@@ -139,10 +139,12 @@ namespace LR2Arena
             // 
             // Ip
             // 
+            this.Ip.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::LR2Arena.Properties.Settings.Default, "Ip", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.Ip.Location = new System.Drawing.Point(72, 12);
             this.Ip.Name = "Ip";
             this.Ip.Size = new System.Drawing.Size(563, 20);
             this.Ip.TabIndex = 10;
+            this.Ip.Text = global::LR2Arena.Properties.Settings.Default.Ip;
             this.Ip.UseSystemPasswordChar = true;
             this.Ip.TextChanged += new System.EventHandler(this.Ip_TextChanged);
             // 
@@ -160,17 +162,17 @@ namespace LR2Arena
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.Location = new System.Drawing.Point(12, 107);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series1.IsValueShownAsLabel = true;
-            series1.IsVisibleInLegend = false;
-            series1.Name = "Score";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series2.IsValueShownAsLabel = true;
+            series2.IsVisibleInLegend = false;
+            series2.Name = "Score";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(776, 143);
             this.chart1.TabIndex = 12;
             this.chart1.Text = "chart1";
@@ -178,6 +180,8 @@ namespace LR2Arena
             // ShowIp
             // 
             this.ShowIp.AutoSize = true;
+            this.ShowIp.Checked = global::LR2Arena.Properties.Settings.Default.ShowIp;
+            this.ShowIp.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LR2Arena.Properties.Settings.Default, "ShowIp", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.ShowIp.Location = new System.Drawing.Point(641, 14);
             this.ShowIp.Name = "ShowIp";
             this.ShowIp.Size = new System.Drawing.Size(66, 17);
@@ -254,8 +258,9 @@ namespace LR2Arena
             // AlwaysOnTop
             // 
             this.AlwaysOnTop.AutoSize = true;
-            this.AlwaysOnTop.Checked = true;
+            this.AlwaysOnTop.Checked = global::LR2Arena.Properties.Settings.Default.AlwaysOnTop;
             this.AlwaysOnTop.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AlwaysOnTop.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LR2Arena.Properties.Settings.Default, "AlwaysOnTop", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AlwaysOnTop.Location = new System.Drawing.Point(12, 558);
             this.AlwaysOnTop.Name = "AlwaysOnTop";
             this.AlwaysOnTop.Size = new System.Drawing.Size(194, 17);
@@ -290,9 +295,11 @@ namespace LR2Arena
             this.Controls.Add(this.BmsMd5);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Log);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("TopMost", global::LR2Arena.Properties.Settings.Default, "AlwaysOnTop", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.Name = "Form1";
             this.Text = "LR2Arena";
-            this.TopMost = true;
+            this.TopMost = global::LR2Arena.Properties.Settings.Default.AlwaysOnTop;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
