@@ -73,6 +73,7 @@ namespace LR2Arena
                 UnfreezeLr2.Enabled = true;
                 ConnectivityCheck.Enabled = true;
                 RandomFlip.Enabled = true;
+                Task.Delay(150).ContinueWith(t => UdpManager.SendRandomFlipToLR2(RandomFlip.Checked)); // small hack to wait for init first
             }
         }
 

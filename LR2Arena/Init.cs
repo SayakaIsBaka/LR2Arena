@@ -50,7 +50,6 @@ namespace LR2Arena
                 }
             });
 
-            UdpManager.SendRandomFlipToLR2(form.IsRandomFlipEnabled());
             return true;
         }
 
