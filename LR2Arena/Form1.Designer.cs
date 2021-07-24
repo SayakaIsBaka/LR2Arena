@@ -30,8 +30,8 @@ namespace LR2Arena
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Log = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BmsMd5 = new System.Windows.Forms.TextBox();
@@ -53,6 +53,7 @@ namespace LR2Arena
             this.UnfreezeLr2 = new System.Windows.Forms.Button();
             this.ConnectivityCheck = new System.Windows.Forms.Button();
             this.AlwaysOnTop = new System.Windows.Forms.CheckBox();
+            this.RandomFlip = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -162,17 +163,17 @@ namespace LR2Arena
             // chart1
             // 
             this.chart1.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Location = new System.Drawing.Point(12, 107);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series2.IsValueShownAsLabel = true;
-            series2.IsVisibleInLegend = false;
-            series2.Name = "Score";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series1.IsValueShownAsLabel = true;
+            series1.IsVisibleInLegend = false;
+            series1.Name = "Score";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(776, 143);
             this.chart1.TabIndex = 12;
             this.chart1.Text = "chart1";
@@ -269,11 +270,26 @@ namespace LR2Arena
             this.AlwaysOnTop.UseVisualStyleBackColor = true;
             this.AlwaysOnTop.CheckedChanged += new System.EventHandler(this.AlwaysOnTop_CheckedChanged);
             // 
+            // RandomFlip
+            // 
+            this.RandomFlip.AutoSize = true;
+            this.RandomFlip.Checked = global::LR2Arena.Properties.Settings.Default.RandomFlip;
+            this.RandomFlip.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::LR2Arena.Properties.Settings.Default, "RandomFlip", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.RandomFlip.Enabled = false;
+            this.RandomFlip.Location = new System.Drawing.Point(12, 581);
+            this.RandomFlip.Name = "RandomFlip";
+            this.RandomFlip.Size = new System.Drawing.Size(113, 17);
+            this.RandomFlip.TabIndex = 22;
+            this.RandomFlip.Text = "Enable random flip";
+            this.RandomFlip.UseVisualStyleBackColor = true;
+            this.RandomFlip.CheckedChanged += new System.EventHandler(this.RandomFlip_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 582);
+            this.ClientSize = new System.Drawing.Size(800, 605);
+            this.Controls.Add(this.RandomFlip);
             this.Controls.Add(this.AlwaysOnTop);
             this.Controls.Add(this.ConnectivityCheck);
             this.Controls.Add(this.UnfreezeLr2);
@@ -330,6 +346,7 @@ namespace LR2Arena
         private System.Windows.Forms.Button UnfreezeLr2;
         private System.Windows.Forms.Button ConnectivityCheck;
         private System.Windows.Forms.CheckBox AlwaysOnTop;
+        private System.Windows.Forms.CheckBox RandomFlip;
     }
 }
 

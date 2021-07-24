@@ -49,6 +49,8 @@ namespace LR2Arena
                     processor.ProcessRemote();
                 }
             });
+
+            UdpManager.SendRandomFlipToLR2(form.IsRandomFlipEnabled());
             return true;
         }
 

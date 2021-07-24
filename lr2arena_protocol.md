@@ -31,4 +31,11 @@ If you wish to develop a new implant for LR2Arena, you need to implement the fol
 
 - `1`: receives the remote player's exscore. It can be used to update the pacemaker in-game. `data` is a 4-byte long unsigned int (little-endian).
 - `2`: notifies that the remote player is ready and has selected the correct chart. Can be used for syncing between clients. `data` is not checked, so it can be empty.
-- `3`: receives a random to use for the next chart. This is always sent, even if the player did not choose the Random option.
+- `3`: receives a random to use for the next chart. This is always sent, even if the player did not choose the Random option. Structure is as follows:
+```
+[ 3 | random (28 bytes) ]
+```
+- `4`: tells whether if random flip should be activated or not. Random flip means that randoms should be mirrored. Structure is as follows:
+```
+[ 4 | random_flip_enabled (1 byte) ]
+```

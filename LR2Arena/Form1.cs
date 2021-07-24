@@ -72,6 +72,7 @@ namespace LR2Arena
                 InjectDllButton.Text = "Successfully injected DLL!";
                 UnfreezeLr2.Enabled = true;
                 ConnectivityCheck.Enabled = true;
+                RandomFlip.Enabled = true;
             }
         }
 
@@ -150,6 +151,16 @@ namespace LR2Arena
         private void AlwaysOnTop_CheckedChanged(object sender, EventArgs e)
         {
             TopMost = !TopMost;
+        }
+
+        public bool IsRandomFlipEnabled()
+        {
+            return RandomFlip.Checked;
+        }
+
+        private void RandomFlip_CheckedChanged(object sender, EventArgs e)
+        {
+            UdpManager.SendRandomFlipToLR2(RandomFlip.Checked);
         }
     }
 }

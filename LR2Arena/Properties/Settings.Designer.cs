@@ -70,5 +70,17 @@ namespace LR2Arena.Properties {
                 this["UpgradeRequired"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RandomFlip {
+            get {
+                return ((bool)(this["RandomFlip"]));
+            }
+            set {
+                this["RandomFlip"] = value;
+            }
+        }
     }
 }
