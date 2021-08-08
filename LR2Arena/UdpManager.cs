@@ -48,6 +48,13 @@ namespace LR2Arena
             byte[] data = { 2 };
             pacemakerClient.SendAsync(data, data.Length, "127.0.0.1", 2223);
         }
+
+        public static void SendEscapeToLR2()
+        {
+            byte[] data = { 5 };
+            pacemakerClient.SendAsync(data, data.Length, "127.0.0.1", 2223);
+        }
+
         public static void SendRandomFlipToLR2(bool enabled)
         {
             byte[] data = new byte[2];

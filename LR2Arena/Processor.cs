@@ -109,7 +109,7 @@ namespace LR2Arena
                     if (!Database.IsBmsPresentInDb(p2Md5))
                     {
                         form.AddLogTextBoxLine("You do not have the chart selected by P2...");
-                        // insert notification to remote here
+                        UdpManager.RemoteSend(new byte[] { 4 });
                         break;
                     }
                     form.SetBmsInfoRemoteTextBox(p2Bms);
@@ -129,6 +129,12 @@ namespace LR2Arena
                     receivedHash = false;
                     form.AddLogTextBoxLine("P2 went back to the menu...");
                     form.SetBmsInfoRemoteTextBox("");
+                    break;
+                case 4: // P2 does not have selected chart
+                    sentHash = false;
+                    UdpManager.SendP2ReadyToLR2();
+                    form.AddLogTextBoxLine("P2 does not have the selected chart...");
+                    UdpManager.SendEscapeToLR2();
                     break;
                 case 98: // Connectivity check (request)
                     UdpManager.SendConnectivityRequestAnswer();
