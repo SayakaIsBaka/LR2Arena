@@ -14,6 +14,7 @@ Play LR2 online with a friend!
 - Random sync
 - Random flip
 - MD5 check between clients (meaning that both players have to start the same chart to play)
+- Database check (checks if the player has the selected chart, sends a message if they don't)
 
 ## Setup
 
@@ -27,7 +28,8 @@ Grab the latest release from the [Releases tab](https://github.com/SayakaIsBaka/
 3. Run LR2Arena.exe
 4. Enter the other person's IP address in LR2Arena, then click on "OK". If you (or the other player) don't know what's your IP, look for "what's my IP" on Google.
 5. Click on the "Inject DLL" button on LR2Arena. If everything went correctly, you should see a new console window appearing.
-6. That's it! Now just select a song (both players have to choose the same BMS) and it should work!
+6. Enable the FPS counter (press F7) if you want to see some messages from LR2Arena directly in game! (only a message if P2 doesn't have the chart can be displayed right now, more to come)
+7. That's it! Now just select a song (both players have to choose the same BMS) and it should work!
 You can also use the "Check connectivity" button to verify if you can successfully connect to the other player.
 
 ## 使用方法 (translation by [Dolphin](https://twitter.com/DolphinDTM), thanks to him!)
@@ -52,7 +54,7 @@ You will need at least Visual Studio 2019 to build this project.
 
 ## TODO
 
-- Database query to verify if the player has the chosen chart
+- Display P2's chosen chart in game (overlay)
 - Overlay on LR2??? (probably not)
 
 ## Special thanks
