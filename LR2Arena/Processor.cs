@@ -106,6 +106,12 @@ namespace LR2Arena
                     string bmsInfo = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * sizeof(uint), recvBuffer.Length - 1 - 7 * sizeof(uint));
                     p2Md5 = bmsInfo.Substring(0, 32);
                     string p2Bms = bmsInfo.Substring(32);
+                    if (!Database.IsBmsPresentInDb(p2Md5))
+                    {
+                        form.AddLogTextBoxLine("You do not have the chart selected by P2...");
+                        // insert notification to remote here
+                        break;
+                    }
                     form.SetBmsInfoRemoteTextBox(p2Bms);
                     receivedHash = true;
                     form.AddLogTextBoxLine("Remote MD5: " + p2Md5);
