@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BmsHeader.cs" />
     <Compile Include="BmsParser.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

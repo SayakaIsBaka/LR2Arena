@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,13 +12,17 @@ namespace LR2Arena
         {
             string dllPath = AppDomain.CurrentDomain.BaseDirectory + "/LR2mind.dll";
             string[] processNames = { "LRHbody", "LR2body" };
-            int ret = 0;
+            int ret = 1;
 
             foreach (string processName in processNames)
             {
-                Injector injector = new Injector(processName);
-                ret = injector.Inject(dllPath);
-                if (ret == 0) break;
+                Process lr2Process = GetLr2Process(processName);
+                if (lr2Process != null) {
+                    Injector injector = new Injector(lr2Process, processName);
+                    ret = injector.Inject(dllPath);
+                    Database.SetDbPathFromLr2Executable(lr2Process.MainModule.FileName);
+                    break;
+                }
             }
 
             if (ret != 0)
@@ -51,6 +56,19 @@ namespace LR2Arena
             });
 
             return true;
+        }
+
+        private static Process GetLr2Process(string processName)
+        {
+            Process[] lr2Processes = Process.GetProcessesByName(processName);
+            if (lr2Processes.Length == 0)
+            {
+                Console.Error.WriteLine(processName + " process not found");
+                return null;
+            }
+            Console.WriteLine(processName + " process found");
+
+            return lr2Processes[0];
         }
 
         private static void StartUdpReceiver(int port, BlockingCollection<byte[]> queue)

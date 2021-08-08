@@ -7,27 +7,20 @@ namespace LR2Arena
 {
     class Injector
     {
+        private Process lr2Process;
         private string processName;
         private IntPtr loadThread;
         private IntPtr lr2ProcHandle;
         private IntPtr mindBaseAddress;
 
-        public Injector(string processName)
+        public Injector(Process lr2Process, string processName)
         {
             this.processName = processName;
+            this.lr2Process = lr2Process;
         }
 
         public int Inject(string dllPath)
         {
-            Process[] lr2Processes = Process.GetProcessesByName(processName);
-            if (lr2Processes.Length == 0)
-            {
-                Console.Error.WriteLine(processName + " process not found");
-                return 1;
-            }
-            Console.WriteLine(processName + " process found");
-
-            Process lr2Process = lr2Processes[0];
             uint dllPathLength = (uint)((dllPath.Length + 1) * sizeof(char));
 
             IntPtr lr2ProcHandle = Imports.OpenProcess(Imports.PROCESS_CREATE_THREAD | Imports.PROCESS_QUERY_INFORMATION | Imports.PROCESS_VM_OPERATION | Imports.PROCESS_VM_WRITE | Imports.PROCESS_VM_READ, false, lr2Process.Id);
