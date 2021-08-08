@@ -132,6 +132,7 @@ namespace LR2Arena
                     break;
                 case 4: // P2 does not have selected chart
                     sentHash = false;
+                    form.SetBmsInfoLocalTextBox("");
                     UdpManager.SendP2ReadyToLR2();
                     form.AddLogTextBoxLine("P2 does not have the selected chart...");
                     UdpManager.SendEscapeToLR2();
