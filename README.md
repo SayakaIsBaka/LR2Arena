@@ -51,6 +51,7 @@ You will need at least Visual Studio 2019 to build this project.
 
 - Using the "MY BEST" pacemaker on LR2 breaks the in-game pacemaker; please use another pacemaker (A / AA / AAA pacemakers should be working)
 - G-BATTLE does not work with LR2Arena
+- Previews must be disabled for LR2Arena to work
 
 ## TODO
 
