@@ -40,3 +40,7 @@ If you wish to develop a new implant for LR2Arena, you need to implement the fol
 [ 4 | random_flip_enabled (1 byte) ]
 ```
 - `5`: notifies that the client should cancel loading and go back to the menu. `data` is not checked, so it can be empty.
+- `6`: receives a message to display on the client, encoded in Shift-JIS. Structure is as follows:
+```
+[ 6 | message (n bytes) ]
+```

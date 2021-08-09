@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace LR2Arena
 {
@@ -34,6 +35,13 @@ namespace LR2Arena
                     queue.Add(recvBuffer);
                 }
             }
+        }
+
+        public static void SendMessageToLR2(string message)
+        {
+            byte[] data = Encoding.GetEncoding(932).GetBytes(message);
+            byte[] dataWithId = AddIdToData(6, data);
+            pacemakerClient.SendAsync(dataWithId, dataWithId.Length, "127.0.0.1", 2223);
         }
 
         public static void UpdatePacemaker(uint exScore)

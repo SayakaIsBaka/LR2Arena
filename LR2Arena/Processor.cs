@@ -123,12 +123,14 @@ namespace LR2Arena
                     {
                         UdpManager.SendRandomToLR2(receivedRandom);
                         LogRandom(receivedRandom, true);
+                        UdpManager.SendMessageToLR2("P2 selected: " + p2Bms);
                     }
                     break;
                 case 3: // Escaped
                     receivedHash = false;
                     form.AddLogTextBoxLine("P2 went back to the menu...");
                     form.SetBmsInfoRemoteTextBox("");
+                    UdpManager.SendMessageToLR2("P2 went back to the menu...");
                     break;
                 case 4: // P2 does not have selected chart
                     sentHash = false;
