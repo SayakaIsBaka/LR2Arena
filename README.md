@@ -30,6 +30,8 @@ Grab the latest release from the [Releases tab](https://github.com/SayakaIsBaka/
 6. That's it! Now just select a song (both players have to choose the same BMS) and it should work!
 You can also use the "Check connectivity" button to verify if you can successfully connect to the other player.
 
+***Tip: You can check if the port is successfully setup by inputting your own public IP address into LR2Arena and then pressing the "Check connectivity" button***
+
 ## 使用方法 (translation by [Dolphin](https://twitter.com/DolphinDTM), thanks to him!)
 
 1. インターネットルーターの設定にアクセスします。 ポート転送設定に移動します。 UDPトラフィック用にポート2224を開きます。 （ルーターはすべて異なるため、特定のルーターの手順を調べてください。）
@@ -58,5 +60,6 @@ You will need at least Visual Studio 2019 to build this project.
 ## Special thanks
 
 - Nothilvien for writing LR2mind's original code and the original injector's code (in C++) and basically giving me the motivation to actually make this (yet again)
+- [MatVeiQaaa](https://github.com/MatVeiQaaa) for the invaluable help with finding the hooking spots, especially for chart loading
 - Mushus for making [bms-parser](https://github.com/Mushus/bms-parser) (which I totally stole the code of for the BMS parsing part again)
-- marie for testing the program with me
+- marie and AYhaz for testing the program with me
