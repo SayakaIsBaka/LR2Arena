@@ -14,6 +14,9 @@ namespace LR2Arena
         private static String p2Md5 = "";
         private static bool sentHash = false;
         private static bool receivedHash = false;
+        private static bool p1Ready = false;
+        private static bool p2Ready = false;
+        private static bool matchingMd5 = true;
         private static uint p1exScore = 0;
         private static uint p2exScore = 0;
 
@@ -49,12 +52,12 @@ namespace LR2Arena
                     Buffer.BlockCopy(byteBmsInfo, 0, dataToSend, generatedRandom.Length, byteBmsInfo.Length);
                     UdpManager.RemoteSendWithId(2, dataToSend);
                     sentHash = true;
-                    form.AddLogTextBoxLine("Waiting for P2 to be ready...");
+                    form.AddLogTextBoxLine("Waiting for P2 hash...");
                     ResetGraph();
                     form.SetBmsMd5TextBox(bmsMd5);
                     if (receivedHash) // Might be ready here if not host
                     {
-                        CheckHashAndSendP2Ready();
+                        CheckHash();
                     }
                     break;
                 case 2: // Score
@@ -79,6 +82,15 @@ namespace LR2Arena
                     form.SetBmsInfoLocalTextBox("");
                     CancelReady();
                     break;
+                case 4: // Player ready
+                    form.AddLogTextBoxLine("Loading done on LR2 side, waiting for P2 to be ready...");
+                    UdpManager.RemoteSendPlayerReady();
+                    p1Ready = true;
+                    if (matchingMd5 && p2Ready) // Might be ready here if not host
+                    {
+                        CheckAndSendP2Ready();
+                    }
+                    break;
                 default:
                     Console.Error.WriteLine("Invalid operation");
                     break;
@@ -101,7 +113,7 @@ namespace LR2Arena
                         form.UpdateGraph(p2exScore, 1);
                     }
                     break;
-                case 2: // P2 hash (is ready)
+                case 2: // P2 hash
                     byte[] receivedRandom = ParseRandom(recvBuffer);
                     string bmsInfo = Encoding.GetEncoding(932).GetString(recvBuffer, 1 + 7 * sizeof(uint), recvBuffer.Length - 1 - 7 * sizeof(uint));
                     p2Md5 = bmsInfo.Substring(0, 32);
@@ -111,7 +123,7 @@ namespace LR2Arena
                     form.AddLogTextBoxLine("Remote MD5: " + p2Md5);
                     if (sentHash) // Might be ready here if host
                     {
-                        CheckHashAndSendP2Ready();
+                        CheckHash();
                     }
                     else
                     {
@@ -121,8 +133,18 @@ namespace LR2Arena
                     break;
                 case 3: // Escaped
                     receivedHash = false;
+                    p2Ready = false;
+                    matchingMd5 = false;
                     form.AddLogTextBoxLine("P2 went back to the menu...");
                     form.SetBmsInfoRemoteTextBox("");
+                    break;
+                case 4: // Remote player ready
+                    p2Ready = true;
+                    form.AddLogTextBoxLine("P2 ready!");
+                    if (matchingMd5 && p1Ready) // Might be ready here if host
+                    {
+                        CheckAndSendP2Ready();
+                    }
                     break;
                 case 98: // Connectivity check (request)
                     UdpManager.SendConnectivityRequestAnswer();
@@ -192,7 +214,7 @@ namespace LR2Arena
             }
         }
 
-        private void CheckHashAndSendP2Ready()
+        private void CheckHash()
         {
             Console.WriteLine("-----");
             Console.WriteLine("p2md5: " + p2Md5);
@@ -200,8 +222,8 @@ namespace LR2Arena
 
             if (p2Md5.Equals(bmsMd5))
             {
-                SendP2ReadyToLR2();
-                form.AddLogTextBoxLine("P2 ready!");
+                matchingMd5 = true;
+                form.AddLogTextBoxLine("Matching MD5, waiting for all players to be ready");
             }
             else
             {
@@ -209,9 +231,24 @@ namespace LR2Arena
             }
         }
 
+        private void CheckAndSendP2Ready()
+        {
+            if (matchingMd5 && p1Ready && p2Ready)
+            {
+                SendP2ReadyToLR2();
+                form.AddLogTextBoxLine("Starting...");
+            }
+            else
+            {
+                form.AddLogTextBoxLine("MD5 not matching..."); // shouldn't be possible to go here
+            }
+        }
+
         private void CancelReady()
         {
             sentHash = false;
+            matchingMd5 = false;
+            p1Ready = false;
             UdpManager.RemoteSend(new byte[] { 3 });
         }
 
@@ -219,6 +256,9 @@ namespace LR2Arena
         {
             sentHash = false;
             receivedHash = false;
+            matchingMd5 = false;
+            p1Ready = false;
+            p2Ready = false;
             UdpManager.SendP2ReadyToLR2();
         }
     }

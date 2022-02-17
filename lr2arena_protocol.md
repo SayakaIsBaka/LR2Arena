@@ -26,6 +26,7 @@ If you wish to develop a new implant for LR2Arena, you need to implement the fol
 [ 2 | poor (4 bytes) | bad (4 bytes) | good (4 bytes) | great (4 bytes) | pgreat (4 bytes) | max_combo (4 bytes) | score (4 bytes) ]
 ```
 - `3`: should be sent when the player cancels chart loading (before the chart has started). `data` is not checked, so it can be empty.
+- `4`: should be sent when the chart is fully loaded and ready. `data` is not checked, so it can be empty.
 
 ### Receive (LR2Arena -> implant)
 

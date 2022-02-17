@@ -48,6 +48,7 @@ namespace LR2Arena
             byte[] data = { 2 };
             pacemakerClient.SendAsync(data, data.Length, "127.0.0.1", 2223);
         }
+
         public static void SendRandomFlipToLR2(bool enabled)
         {
             byte[] data = new byte[2];
@@ -89,6 +90,11 @@ namespace LR2Arena
         {
             byte[] dataWithId = AddIdToData(id, data);
             RemoteSend(dataWithId);
+        }
+
+        public static void RemoteSendPlayerReady()
+        {
+            RemoteSend(new byte[] { 4 });
         }
 
         public static void SendConnectivityCheckRequest()
