@@ -15,12 +15,13 @@ namespace LR2Arena
         static string remoteEndpoint = "";
         static int remotePort = 0;
 
-        public UdpManager(int port, BlockingCollection<byte[]> queue)
+        public UdpManager(int port, BlockingCollection<byte[]> queue, bool isRemote)
         {
             this.port = port;
             this.queue = queue;
+            IPAddress addr = isRemote ? IPAddress.Any : IPAddress.Loopback;
             udpClient = new UdpClient();
-            udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, port));
+            udpClient.Client.Bind(new IPEndPoint(addr, port));
         }
 
         public void Listen()
