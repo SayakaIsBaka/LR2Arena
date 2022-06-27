@@ -20,6 +20,8 @@ Play LR2 online with a friend!
 Grab the latest release from the [Releases tab](https://github.com/SayakaIsBaka/LR2Arena/releases) and run `LR2Arena.exe`.
 **Every player needs to have port 2224 (UDP) opened to be able to connect!** Be sure to route everything correctly if you have NAT enabled and add an exception to your firewall.
 
+Alternatively, you can use a VPN or a service such as [ZeroTier](https://www.zerotier.com) to have both players in a local network, removing the need to open / forward ports on your router.
+
 ## Step-by-step instructions
 
 1. Forward port 2224 (UDP) to your computer in your router (check your router's manual if you don't know how to do this). **Both players need to do this.**
