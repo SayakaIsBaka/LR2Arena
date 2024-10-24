@@ -1,3 +1,5 @@
+### Use LR2ArenaEx instead: https://github.com/SayakaIsBaka/LR2ArenaEx
+
 # LR2Arena
 
 Play LR2 online with a friend!
